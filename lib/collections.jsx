@@ -1,4 +1,4 @@
-import Mongo from "meteor/mongo";
+import {Mongo} from "meteor/mongo";
 
 export const Books = new Mongo.Collection("books");
 
@@ -15,7 +15,7 @@ Books.deny({
 });
 
 const BooksSchema = new SimpleSchema({
-	title {
+	title: {
 		type: String,
 		label: "Title"
 	},
