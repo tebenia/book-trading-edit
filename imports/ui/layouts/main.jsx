@@ -7,11 +7,11 @@ import AccountsUIWrapper from "../components/accountsUIWrapper";
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
-export const MainLayout = ({children}) => (
+const MainLayout = ({children}) => (
 	<MuiThemeProvider muiTheme={lightMuiTheme}>
 		<div>
 			<AppBar 
-				title="Book Trading App"
+				title="App"
 				iconElementRight={<AccountsUIWrapper/>}
 				zDepth={4}
 			/>
@@ -23,3 +23,5 @@ export const MainLayout = ({children}) => (
 MainLayout.PropTypes = {
 	children: React.PropTypes.object
 }
+
+export default MainLayout;
