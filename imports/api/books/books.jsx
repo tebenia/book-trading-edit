@@ -29,7 +29,14 @@ Books.schema = new SimpleSchema({
 		label: 'The date this book was created',
 		denyUpdate: true,
 		autoValue(){
-			return new Date();
+			if(this.isInsert){
+				return new Date();
+			} else if (this.isUpsert){
+				return {
+					$setOnInsert: new Date()
+				};
+			}
+			this.unset();
 		}
 	}
 });

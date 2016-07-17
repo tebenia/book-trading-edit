@@ -11,10 +11,44 @@ export const insert = new ValidatedMethod({
 		}
 	}).validator(),
 	run({title}) {
+		if(!this.userId){
+			throw new Meteor.Error("books.insert.accessDenied",
+				"Please Login first"
+			);
+		}
 		const book = {
-			title
+			title,
+			userId: this.userId
 		};
 		Books.insert(book);
+	}
+});
+
+export const update = new ValidatedMethod({
+	name: "books.update",
+	validate: new SimpleSchema({
+		bookId: {
+			type: String
+		},
+		title: {
+			type: String
+		}
+	}).validator(),
+	run({bookId, title}){
+		const book = Books.findOne(bookId);
+
+		if(!book){
+			throw new Meteor.Error("books.update.accessDenied",
+				"Error 404"
+			);
+		}
+
+		if(!book.editableBy(this.userId)){
+			throw new error ("books.update.accessDenied",
+				"You can't edit this"
+			);
+		}
+		Books.update(book, {$set:{title}});
 	}
 });
 
@@ -26,7 +60,13 @@ export const remove = new ValidatedMethod({
 		}
 	}).validator(),
 	run({bookId}) {
-		const book = Books.finOne(bookId);
+		const book = Books.findOne(bookId);
+
+		if(!book){
+			throw new Meteor.Error("books.remove.accessDenied",
+				"Error 404"
+			);
+		}
 
 		if(!book.editableBy(this.userId)){
 			throw new error ("books.remove.accessDenied",
