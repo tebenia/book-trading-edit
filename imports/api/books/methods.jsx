@@ -44,7 +44,7 @@ export const update = new ValidatedMethod({
 		}
 
 		if(!book.editableBy(this.userId)){
-			throw new error ("books.update.accessDenied",
+			throw new Meteor.Error("books.update.accessDenied",
 				"You can't edit this"
 			);
 		}
@@ -69,7 +69,7 @@ export const remove = new ValidatedMethod({
 		}
 
 		if(!book.editableBy(this.userId)){
-			throw new error ("books.remove.accessDenied",
+			throw new Meteor.Error("books.remove.accessDenied",
 				"You can't remove this"
 			);
 		}
