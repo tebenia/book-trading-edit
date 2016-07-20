@@ -8,21 +8,35 @@ import Navigation from "../components/navigation";
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
-const MainLayout = ({children}) => (
-	<MuiThemeProvider muiTheme={lightMuiTheme}>
-		<div>
-			<AppBar 
-				title="App"
-				iconElementRight={<AccountsUIWrapper/>}
-				zDepth={4}
-			/>
-			<Navigation/>
-			{children}
-		</div>
-	</MuiThemeProvider>
-);
+class MainLayout extends React.Component {
+	constructor(props) {
+		super(props);
 
-MainLayout.PropTypes = {
+		this.handleMenuClick = this.handleMenuClick.bind(this);
+	}
+
+	handleMenuClick(){
+		this.refs.navBar.handleToggle();
+	}
+
+	render(){
+		return(
+			<MuiThemeProvider muiTheme={lightMuiTheme}>
+				<div>
+					<AppBar
+						title="Book Trading App"
+						iconElementRight={<AccountsUIWrapper/>}
+						onLeftIconButtonTouchTap={this.handleMenuClick}
+					/>
+					<Navigation ref="navBar"/>
+					{this.props.children}
+				</div>
+			</MuiThemeProvider>
+		);
+	}
+}
+
+MainLayout.propTypes = {
 	children: React.PropTypes.object
 }
 
