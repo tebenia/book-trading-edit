@@ -1,6 +1,6 @@
 import {Meteor} from "meteor/meteor";
 import {check} from "meteor/check";
-import {bookSearchByTitle} as mod from "./bookSearch";
+import {bookSearchByTitle} from "./bookSearch";
 
 Meteor.publish("bookSearch", function books(title){
 	check(title, String);
