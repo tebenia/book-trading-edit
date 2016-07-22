@@ -5,7 +5,7 @@ const books = google.books("v1");
 
 function googleBookSearchByTitle(title, callback){
 	books.volumes.list({
-		auth: Meteor.settings.google.api_key,
+		auth: Meteor.settings.api_key,
 		q: title,
 		maxResults: 20
 	}, callback);

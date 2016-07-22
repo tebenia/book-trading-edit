@@ -4,7 +4,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import {AppBar} from "material-ui";
 import AccountsUIWrapper from "../components/accountsUIWrapper";
-import Navigation from "../components/navigation";
+import Navigation from "./navigation";
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
