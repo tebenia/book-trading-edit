@@ -1,6 +1,9 @@
 import React from "react";
-import BookList from "../containers/bookList";
+import BookList from "../containers/bookOwnedList";
 
-export const Index = () => (
-	<BookList/>
+const Index = () => (
+	// <BookList/>
+	<h1>Index</h1>
 );
+
+export default Index;

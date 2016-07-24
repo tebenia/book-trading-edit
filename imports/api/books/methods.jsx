@@ -17,8 +17,7 @@ export const insert = new ValidatedMethod({
 			);
 		}
 		const book = {
-			title,
-			userId: this.userId
+			title
 		};
 		Books.insert(book);
 	}
@@ -43,7 +42,7 @@ export const update = new ValidatedMethod({
 			);
 		}
 
-		if(!book.editableBy(this.userId)){
+		if(!book.editableByCurrentUser()){
 			throw new Meteor.Error("books.update.accessDenied",
 				"You can't edit this"
 			);

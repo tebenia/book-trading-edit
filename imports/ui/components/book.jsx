@@ -24,6 +24,17 @@ class Book extends React.Component {
 		super(props);
 
 		this.handleDeleteClick = this.handleDeleteClick.bind(this);
+		this.handleAddClick = this.handleAddClick.bind(this);
+		this.handleEditClick = this.handleEditClick.bind(this);
+	}
+
+	handleAddClick(){
+		this.props.book.addBookToCollection();
+		this.context.router.push("/mybooks");
+	}
+
+	handleEditClick(){
+		this.context.router.push(`/books/${this.props.book._id}`);
 	}
 
 	handleDeleteClick(){
@@ -32,18 +43,30 @@ class Book extends React.Component {
 
 	renderActions(){
 		const book = this.props.book;
+		const actions = this.props.actions;
+		const actionButtons = [];
 
 		if(book.editableByCurrentUser()){
-			return (
-				<MuiThemeProvider muiTheme={lightMuiTheme}>
-					<div>
-						<CardActions>
-							<FlatButton label="Edit" />
-							<FlatButton label="Delete" onClick={this.handleDeleteClick}/>
-						</CardActions>
-					</div>
-				</MuiThemeProvider>
-			);
+			if(actions.includes("edit")){
+				actionButtons.push(<FlatButton key="action_edit" label="Edit" onClick={this.handleEditClick}/>);
+			}
+			if(actions.includes("delete")){
+				actionButtons.push(<FlatButton key="action_delete" label="Delete" onClick={this.handleDeleteClick}/>);
+			}
+			if(actions.includes("add")){
+				actionButtons.push(<FlatButton key="action_add" label="Add" onClick={this.handleAddClick}/>);
+			}
+			if(actionButtons.length > 0){
+				return (
+					<MuiThemeProvider muiTheme={lightMuiTheme}>
+						<div>
+							<CardActions>
+								{actionButtons}
+							</CardActions>
+						</div>
+					</MuiThemeProvider>
+				);
+			}
 		}	
 	}
 

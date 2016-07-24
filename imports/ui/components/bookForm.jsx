@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {insert} from "/imports/api/books/methods";
-import {update} from "/imports/api/books/methods";
+import {insert, update} from "/imports/api/books/methods";
 
 class BookForm extends React.Component {
 	constructor(props){

@@ -57,19 +57,21 @@ class Navigation extends React.Component {
 							open 
 						})}
 					>
-						<Link to="/search" style={styles.link}>
+						<Link to="/mybooks" style={styles.link}>
 							<MenuItem leftIcon={<AvLibraryBooks/>} onTouchTap={this.handleClose}>
-								Search
+								My Books
 							</MenuItem>
 						</Link>
-						<Link to="/" style={styles.link}>
+						<Link to="/books" style={styles.link}>
 							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
 								Available Books
 							</MenuItem>
 						</Link>
-						<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
-							Stuff
-						</MenuItem>
+						<Link to="/books/add" style={styles.link}>
+							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
+								Add Search
+							</MenuItem>
+						</Link>
 					</Drawer>
 				</div>
 			</MuiThemeProvider>

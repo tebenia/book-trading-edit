@@ -1,6 +1,7 @@
 import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
+import {insert} from "./methods";
 
 export const Books = new Mongo.Collection("books");
 
@@ -23,7 +24,10 @@ Books.schema = new SimpleSchema({
 	},
 	userId: {
 		type: String,
-		regEx: SimpleSchema.RegEx.Id
+		regEx: SimpleSchema.RegEx.Id,
+		autoValue(){
+			return this.userId;
+		}
 	},
 	createdAt: {
 		type: Date,
@@ -45,6 +49,9 @@ Books.schema = new SimpleSchema({
 Books.helpers({
 	editableByCurrentUser(userId){
 		return this.userId === Meteor.userId();
+	},
+	addBookToCollection(){
+		insert.call({title: this.title});
 	}
 });
 

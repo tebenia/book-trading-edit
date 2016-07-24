@@ -1,4 +1,5 @@
 import {Meteor} from "meteor/meteor";
+import {Mongo} from "meteor/mongo";
 
 const google = require("googleapis");
 const books = google.books("v1");
@@ -35,13 +36,8 @@ export function bookSearchByTitle(titleSearch){
 	       }
 
 	       return {
-	        id,
-	        title,
-	        author,
-	        pageCount,
-	        publisher,
-	        publishedDate,
-	        thumbnail
+	        _id: new Mongo.ObjectID(),
+	        title
 	      };
 		});
 	}
