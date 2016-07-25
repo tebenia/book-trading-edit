@@ -76,6 +76,7 @@ class BookForm extends React.Component {
 						ref="descriptionInput"
 						hintText="Book Description"
 						defaultValue={this.props.book.description}
+						multiline={true}
 					/>
 					<label>Publisher:</label>
 					<TextField 

@@ -65,7 +65,12 @@ class Navigation extends React.Component {
 						</Link>
 						<Link to="/books/add" style={styles.link}>
 							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
-								Add Search
+								Add Books
+							</MenuItem>
+						</Link>
+						<Link to="/myprofile" style={styles.link}>
+							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
+								My Profile
 							</MenuItem>
 						</Link>
 					</Drawer>

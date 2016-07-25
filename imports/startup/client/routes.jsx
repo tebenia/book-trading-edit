@@ -4,10 +4,10 @@ import Index from "/imports/ui/components/index";
 import MainLayout from "/imports/ui/layouts/main";
 import BookForm from "/imports/ui/components/bookForm";
 import BookEdit from "/imports/ui/containers/bookEdit";
-import SearchForm from "/imports/ui/components/searchForm";
 import BooksAvailable from "/imports/ui/components/booksAvailable";
 import BooksOwned from "/imports/ui/components/booksOwned";
 import BooksAddSearch from "/imports/ui/components/booksAddSearch";
+import UserProfile from "/imports/ui/containers/userProfile";
 
 export const Routes = () =>(
 	<Router history={browserHistory}>
@@ -18,6 +18,7 @@ export const Routes = () =>(
 			<Route path="books/add" component={BookForm}/>
 			<Route path="books/:id" component={BookEdit}/>
 			<Route path="books/search" component={BooksAddSearch}/>
+			<Route path="myProfile" component={UserProfile}/>
 		</Route>
 	</Router>
 );
