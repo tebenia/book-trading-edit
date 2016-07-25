@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import {Paper} from "material-ui";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
 import {FlatButton} from "material-ui";
+import {Divider} from "material-ui";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
@@ -14,8 +15,17 @@ const styles = {
 	paper: {
 		width: 350,
 		margin: 10,
-		textAlign: "center",
 		display: "inline-block"
+	},
+	actions : {
+		textAlign: "center"
+	},
+	thumbnailContainer: {
+		textAlign: "center"
+	},
+	thumbnail: {
+		height: 200,
+		width: "auto"
 	}
 };
 
@@ -60,7 +70,7 @@ class Book extends React.Component {
 				return (
 					<MuiThemeProvider muiTheme={lightMuiTheme}>
 						<div>
-							<CardActions>
+							<CardActions style={styles.actions}>
 								{actionButtons}
 							</CardActions>
 						</div>
@@ -76,12 +86,19 @@ class Book extends React.Component {
 				<div>
 					<Paper style={styles.paper} zDepth={4}>
 						<Card>
-							<CardTitle title={this.props.book.title} subtitle={this.props.book.author}/>
-							<CardMedia>
-								<img src={this.props.book.thumbnail} alt={this.props.book.title}/>
-							</CardMedia>
-							<CardText>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente cupiditate atque temporibus facilis excepturi unde a ipsam veniam eligendi porro alias at eos nam accusamus, minima, repudiandae nostrum molestias sed.
+							<CardTitle 
+								title={this.props.book.title} 
+								subtitle={this.props.book.author}
+								showExpandableButton={true}
+							/>
+							<CardText style={styles.thumbnailContainer}>
+								<img src={this.props.book.thumbnail} alt={this.props.book.title} style={styles.thumbnail}/>
+							</CardText>
+							<CardText expandable={true}>
+								<p>{this.props.book.description}</p>
+								<br/>
+								<p><b>Publisher:</b>{this.props.book.publisher}</p>
+								<p><b>Pages:</b>{this.props.book.pageCount}</p>
 							</CardText>
 							{this.renderActions()}
 						</Card>
@@ -94,6 +111,10 @@ class Book extends React.Component {
 
 Book.propTypes = {
 	book: React.PropTypes.object.isRequired
+};
+
+Book.contextTypes = {
+   router: React.PropTypes.object.isRequired
 };
 
 export default Book;

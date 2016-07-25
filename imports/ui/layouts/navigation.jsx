@@ -12,13 +12,10 @@ import AvLibraryBooks from "material-ui/svg-icons/av/library-books";
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
 const styles  = {
-	navBar : {
-		top: 64
-	},
 	link: {
 		textDecoration: "none"
 	}
-}
+};
 
 class Navigation extends React.Component {
 	constructor(props) {
@@ -49,7 +46,6 @@ class Navigation extends React.Component {
 			<MuiThemeProvider muiTheme={lightMuiTheme}>
 				<div>
 					<Drawer
-						containerStyle={styles.navBar}
 						docked={false}
 						width={200}
 						open={this.state.open}
