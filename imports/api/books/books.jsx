@@ -22,6 +22,29 @@ Books.schema = new SimpleSchema({
 		type: String,
 		label: "Title"
 	},
+	author: {
+		type: String,
+		label: "Author"
+	},
+	thumbnail: {
+		type: String,
+		label: "Thumbnail URL"
+	},
+	publisher: {
+		type: String,
+		label: "Book Publisher",
+		optional: true
+	},
+	description: {
+		type: String,
+		label: "Book Description",
+		optional: true
+	},
+	pageCount: {
+		type: Number,
+		label: "Page Number",
+		optional: true
+	},
 	userId: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
@@ -51,7 +74,14 @@ Books.helpers({
 		return this.userId === Meteor.userId();
 	},
 	addBookToCollection(){
-		insert.call({title: this.title});
+		insert.call({
+			title: this.title,
+			author: this.author,
+			thumbnail: this.thumbnail,
+			description: this.description,
+			pageCount: this.pageCount,
+			publisher: this.publisher
+		});
 	}
 });
 

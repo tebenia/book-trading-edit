@@ -8,18 +8,38 @@ export const insert = new ValidatedMethod({
 	validate: new SimpleSchema({
 		title: {
 			type: String
+		},
+		author: {
+			type: String
+		},
+		thumbnail: {
+			type: String
+		},
+		description: {
+			type: String
+		},
+		publisher: {
+			type: String
+		},
+		pageCount: {
+			type: String
 		}
 	}).validator(),
-	run({title}) {
+	run({title, author, thumbnail, description, publisher, pageCount}) {
 		if(!this.userId){
 			throw new Meteor.Error("books.insert.accessDenied",
 				"Please Login first"
 			);
 		}
-		const book = {
-			title
+		const bookFields = {
+			title, 
+			author, 
+			thumbnail, 
+			description, 
+			publisher,
+			pageCount
 		};
-		Books.insert(book);
+		Books.insert(bookFields);
 	}
 });
 
@@ -31,9 +51,24 @@ export const update = new ValidatedMethod({
 		},
 		title: {
 			type: String
+		},
+		author: {
+			type: String
+		},
+		thumbnail: {
+			type: String
+		},
+		description: {
+			type: String
+		},
+		publisher: {
+			type: String
+		},
+		pageCount: {
+			type: String
 		}
 	}).validator(),
-	run({bookId, title}){
+	run({bookId, title, author, thumbnail, description, publisher, pageCount}){
 		const book = Books.findOne(bookId);
 
 		if(!book){
@@ -47,7 +82,17 @@ export const update = new ValidatedMethod({
 				"You can't edit this"
 			);
 		}
-		Books.update(book, {$set:{title}});
+
+		const bookFields = {
+			title, 
+			author, 
+			thumbnail, 
+			description, 
+			publisher, 
+			pageCount
+		}
+
+		Books.update(book, {$set: bookFields});
 	}
 });
 
