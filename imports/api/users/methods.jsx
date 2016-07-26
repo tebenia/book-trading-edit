@@ -5,7 +5,7 @@ import {Users} from "./users";
 import {AddressSchema} from "./addresses";
 
 const userProfileValidator = new SimpleSchema({
-	fullname: {
+	fullName: {
 		type: String
 	},
 	shippingAddress: {
@@ -22,6 +22,6 @@ export const updateProfile = new ValidatedMethod({
 				"Please Login first"
 			);
 		}
-		Users.update(this.userId, {$set: {fullname, shippingAddress}});
+		Users.update(this.userId, {$set: {fullName, shippingAddress}});
 	}
 });

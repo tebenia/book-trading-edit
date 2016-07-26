@@ -89,7 +89,7 @@ class Book extends React.Component {
 							<CardTitle 
 								title={this.props.book.title} 
 								subtitle={this.props.book.author}
-								showExpandableButton={true}
+								//showExpandableButton={true}
 							/>
 							<CardText style={styles.thumbnailContainer}>
 								<img src={this.props.book.thumbnail} alt={this.props.book.title} style={styles.thumbnail}/>

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Paper} from "material-ui";
 import {TextField} from "material-ui";
+import {Divider} from "material-ui";
 import {insert, update} from "/imports/api/books/methods";
 
 const styles = {
@@ -59,37 +60,43 @@ class BookForm extends React.Component {
 						hintText="Book Title"
 						defaultValue={this.props.book.title}
 					/>
+					<Divider />
 					<label>Author:</label>
 					<TextField 
 						ref="authorInput"
 						hintText="Book Author"
 						defaultValue={this.props.book.author}
 					/>
+					<Divider />
 					<label>Thumbnail:</label>
 					<TextField 
 						ref="thumbnailInput"
 						hintText="Book Thumbnail"
 						defaultValue={this.props.book.thumbnail}
 					/>
+					<Divider />
 					<label>Description:</label>
 					<TextField 
 						ref="descriptionInput"
 						hintText="Book Description"
 						defaultValue={this.props.book.description}
-						multiline={true}
+						multiLine={true}
 					/>
+					<Divider />
 					<label>Publisher:</label>
 					<TextField 
 						ref="publisherInput"
 						hintText="Book Publisher"
 						defaultValue={this.props.book.publisher}
 					/>
+					<Divider />
 					<label>Page Count:</label>
 					<TextField 
 						ref="pageCountInput"
 						hintText="Book Page Count"
 						defaultValue={this.props.book.count}
 					/>
+					<Divider />
 					<input type="submit"/>
 				</form>
 			</Paper>

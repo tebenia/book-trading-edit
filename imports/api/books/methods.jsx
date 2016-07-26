@@ -22,7 +22,7 @@ export const insert = new ValidatedMethod({
 			type: String
 		},
 		pageCount: {
-			type: String
+			type: Number
 		}
 	}).validator(),
 	run({title, author, thumbnail, description, publisher, pageCount}) {
@@ -65,7 +65,7 @@ export const update = new ValidatedMethod({
 			type: String
 		},
 		pageCount: {
-			type: String
+			type: Number
 		}
 	}).validator(),
 	run({bookId, title, author, thumbnail, description, publisher, pageCount}){
@@ -112,7 +112,7 @@ export const remove = new ValidatedMethod({
 			);
 		}
 
-		if(!book.editableBy(this.userId)){
+		if(!book.editableByCurrentUser()){
 			throw new Meteor.Error("books.remove.accessDenied",
 				"You can't remove this"
 			);

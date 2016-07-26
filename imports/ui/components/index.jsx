@@ -1,8 +1,7 @@
 import React from "react";
-import BookList from "../containers/bookOwnedList";
+import BookList from "./bookList";
 
 const Index = () => (
-	// <BookList/>
 	<h1>Index</h1>
 );
 

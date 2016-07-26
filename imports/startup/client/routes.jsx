@@ -13,12 +13,12 @@ export const Routes = () =>(
 	<Router history={browserHistory}>
 		<Route path="/" component={MainLayout}>
 			<IndexRoute component={Index}/>
-			<Route path="books" component={BooksAvailable}/>
-			<Route path="mybooks" component={BooksOwned}/>
-			<Route path="books/add" component={BookForm}/>
-			<Route path="books/:id" component={BookEdit}/>
-			<Route path="books/search" component={BooksAddSearch}/>
-			<Route path="myProfile" component={UserProfile}/>
+			<Route path="/books" component={BooksAvailable}/>
+			<Route path="/mybooks" component={BooksOwned}/>
+			<Route path="/books/add" component={BookForm}/>
+			<Route path="/books/:id" component={BookEdit}/>
+			<Route path="/books/search" component={BooksAddSearch}/>
+			<Route path="/myProfile" component={UserProfile}/>
 		</Route>
 	</Router>
 );

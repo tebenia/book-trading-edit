@@ -43,11 +43,10 @@ class SearchForm extends React.Component {
 		return (
 			<MuiThemeProvider muiTheme={lightMuiTheme}>
 				<div>
-					<paper style={styles.paper} zDepth={4}>
+					<Paper style={styles.paper} zDepth={4}>
 						<TextField 
 							name="searchTitleInput"
 							ref="searchTitle"
-							value={this.state.titleInput}
 							onKeyDown={this.handleSearchKeyDown}
 							hintText="Type books you are looking for..."
 						/>
@@ -60,8 +59,7 @@ class SearchForm extends React.Component {
 						>
 							<ActionSearch/>
 						</FloatingActionButton>
-						{this.renderSearchList()}	
-					</paper>
+					</Paper>
 				</div>
 			</MuiThemeProvider>
 		);
