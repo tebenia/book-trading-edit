@@ -11,7 +11,7 @@ Meteor.publish("user.profile", function userProfile(){
 
 	const options = {
 		fields: {
-			fullname: 1,
+			fullName: 1,
 			shippingAddress: 1
 		}
 	};

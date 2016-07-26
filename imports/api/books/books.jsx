@@ -2,6 +2,7 @@ import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import {insert} from "./methods";
+import {trade} from "./methods";
 
 export const Books = new Mongo.Collection("books");
 
@@ -48,8 +49,16 @@ Books.schema = new SimpleSchema({
 	userId: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
+		denyUpdate: true,
 		autoValue(){
-			return this.userId;
+			if(this.isInsert){
+				return this.userId;
+			} else if (this.isUpsert){
+				return {
+					$setOnInsert: this.userId
+				};
+			}
+			this.unset();
 		}
 	},
 	traded: {

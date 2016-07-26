@@ -2,6 +2,7 @@ import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import {Books} from "./books";
+import {Trades} from "../trades/trades";
 
 export const insert = new ValidatedMethod({
 	name: "books.insert",
@@ -118,5 +119,38 @@ export const remove = new ValidatedMethod({
 			);
 		}
 		Books.remove(bookId);
+	}
+});
+
+export const trade = new ValidatedMethod({
+	name: "books.trade",
+	validate: new SimpleSchema({
+		bookId: {
+			type: String
+		}
+	}).validator(),
+	run({bookId}){
+		const book = Books.findOne(bookId);
+
+		if (!book) {
+			throw new Meteor.Error("books.trade.accessDenied",
+				"Unable to find book"
+			);
+		}
+
+		if (book.editableByCurrentUser()) {
+			throw new Meteor.Error("books.trade.accessDenied",
+				"Cannot trade books you already own"
+			);
+		}
+
+		if (book.traded) {
+			throw new Meteor.Error("books.trade.accessDenied",
+				"Cannot trade books that has already been traded"
+			);
+		}
+
+		Trades.insert({bookId});
+		Books.update(bookId, {$set: {traded: true}});
 	}
 });

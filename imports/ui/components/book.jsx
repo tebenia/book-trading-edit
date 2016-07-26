@@ -1,9 +1,7 @@
 import React from "react";
-import {Link} from "react-router";
 import {Paper} from "material-ui";
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import {Card, CardActions, CardTitle, CardText} from "material-ui/Card";
 import {FlatButton} from "material-ui";
-import {Divider} from "material-ui";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
@@ -36,6 +34,7 @@ class Book extends React.Component {
 		this.handleDeleteClick = this.handleDeleteClick.bind(this);
 		this.handleAddClick = this.handleAddClick.bind(this);
 		this.handleEditClick = this.handleEditClick.bind(this);
+		this.handleTradeClick = this.handleTradeClick.bind(this);
 	}
 
 	handleAddClick(){
@@ -49,6 +48,10 @@ class Book extends React.Component {
 
 	handleDeleteClick(){
 		remove.call({bookId:this.props.book._id});
+	}
+
+	handleTradeClick(){
+		this.props.book.requestTrade();
 	}
 
 	renderActions(){
@@ -65,6 +68,9 @@ class Book extends React.Component {
 			}
 			if(actions.includes("add")){
 				actionButtons.push(<FlatButton key="action_add" label="Add" onClick={this.handleAddClick}/>);
+			}
+			if(actions.includes("trade")){
+				actionButtons.push(<FlatButton key="action_trade" label="Request Trade" onClick={this.handleTradeClick}/>);
 			}
 			if(actionButtons.length > 0){
 				return (
@@ -94,7 +100,7 @@ class Book extends React.Component {
 							<CardText style={styles.thumbnailContainer}>
 								<img src={this.props.book.thumbnail} alt={this.props.book.title} style={styles.thumbnail}/>
 							</CardText>
-							<CardText expandable={true}>
+							<CardText /*expandable={true}*/>
 								<p>{this.props.book.description}</p>
 								<br/>
 								<p><b>Publisher:</b>{this.props.book.publisher}</p>
@@ -110,7 +116,12 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-	book: React.PropTypes.object.isRequired
+	book: React.PropTypes.object.isRequired,
+	actions: React.PropTypes.array
+};
+
+Book.defaultProps = {
+	actions: []
 };
 
 Book.contextTypes = {

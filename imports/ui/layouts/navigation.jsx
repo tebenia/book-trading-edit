@@ -68,6 +68,16 @@ class Navigation extends React.Component {
 								Add Books
 							</MenuItem>
 						</Link>
+						<Link to="/addbooks" style={styles.link}>
+							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
+								Add Books from Google
+							</MenuItem>
+						</Link>
+						<Link to="/tradedbooks" style={styles.link}>
+							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
+								Traded Books
+							</MenuItem>
+						</Link>
 						<Link to="/myprofile" style={styles.link}>
 							<MenuItem leftIcon={<AvLibraryAdd/>} onTouchTap={this.handleClose}>
 								My Profile
