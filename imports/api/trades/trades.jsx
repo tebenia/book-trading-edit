@@ -1,6 +1,7 @@
 import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
+import {cancel, ship, receive, accept, reject} from "./methods";
 
 export const Trades = new Mongo.Collection("trades");
 
@@ -20,6 +21,10 @@ Trades.schema = new SimpleSchema({
 	bookId: {
 		type: SimpleSchema.RegEx.Id,
 		label: "ID of book to be traded"
+	},
+	bookOwnerUserId: {
+		type: String,
+		label: "UserId of the owner of the book",
 	},
 	userId: {
 		type: String,
@@ -62,8 +67,59 @@ Trades.schema = new SimpleSchema({
 });
 
 Trades.helpers({
-	editableByCurrentUser(userId){
+	isTradeCreator(){
 		return this.userId === Meteor.userId();
+	},
+	book(){
+		return Books.findOne(this.bookId);
+	},
+	isbookOwner(){
+		return this.bookOwnerUserId == Meteor.userId();
+	},
+	cancel(){
+		cancel.call({tradeId: this._id});
+	},
+	canCancel(){
+		if(this.accepted || this.rejected || this.isbookOwner()){
+			return false;
+		}
+		return true;
+	},
+	accept(){
+		accept.call({tradeId: this._id});
+	},
+	canAccept(){
+		if(this.accepted || this.rejected || this.isbookOwner()){
+			return false;
+		}
+		return true;
+	},
+	reject(){
+		reject.call({tradeId: this._id});
+	},
+	canReject(){
+		if(this.accepted || this.shipped || this.isbookOwner()){
+			return false;
+		}
+		return true;
+	},
+	ship(){
+		ship.call({tradeId: this._id});
+	},
+	canShip(){
+		if(this.accepted || this.isbookOwner()){
+			return false;
+		}
+		return true;
+	},
+	receive(){
+		receive.call({tradeId: this._id});
+	},
+	canReceive(){
+		if(this.shipped || this.isTradeCreator()){
+			return false;
+		}
+		return true;
 	}
 });
 

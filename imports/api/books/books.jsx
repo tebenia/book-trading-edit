@@ -3,6 +3,7 @@ import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import {insert} from "./methods";
 import {trade} from "./methods";
+import {remove} from "./methods";
 
 export const Books = new Mongo.Collection("books");
 
@@ -96,6 +97,14 @@ Books.helpers({
 			pageCount: this.pageCount,
 			publisher: this.publisher
 		});
+	},
+	requestTrade(){
+		trade.call({
+			bookId: this._id
+		});
+	},
+	remove(){
+		remove.call({bookId: this._id});
 	}
 });
 

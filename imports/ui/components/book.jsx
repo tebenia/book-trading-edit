@@ -5,7 +5,6 @@ import {FlatButton} from "material-ui";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-import {remove} from "/imports/api/books/methods";
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
@@ -47,7 +46,7 @@ class Book extends React.Component {
 	}
 
 	handleDeleteClick(){
-		remove.call({bookId:this.props.book._id});
+		this.props.book.remove();
 	}
 
 	handleTradeClick(){

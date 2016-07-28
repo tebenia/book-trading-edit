@@ -24,3 +24,4 @@ service-configuration
 dburles:collection-helpers
 mdg:validated-method
 less
+reywood:publish-composite

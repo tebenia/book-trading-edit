@@ -1,17 +1,22 @@
 import {Meteor} from "meteor/meteor";
 import {check} from "meteor/check";
 import {Trades} from "../trades";
+import {Books} from "../../books/books";
 
-Meteor.publish('myTrades', function myTrades() {
-	if (!this.userId) {
-		return this.ready();
-	}
+Meteor.publishComposite('myTrades', {
+	find(){
+		if (!this.userId) {
+			return this.ready();
+		}
 
-	const query = {};
+		const query= {};
 
-	if(this.userId){
 		query.userId = this.userId;
-	}
-
-	return Trades.find(query);
+		return Trades.find(query);
+	},
+	children:[{
+		find(trade){
+			return Books.find({_id: trade.bookId}, {limit:1});
+		}
+	}]
 });

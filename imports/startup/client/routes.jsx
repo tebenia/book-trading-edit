@@ -7,6 +7,7 @@ import BookEdit from "/imports/ui/containers/bookEdit";
 import BooksAvailable from "/imports/ui/components/booksAvailable";
 import BooksTraded from "/imports/ui/components/booksTraded";
 import BooksOwned from "/imports/ui/components/booksOwned";
+import TradePage from "/imports/ui/components/tradePage";
 import BooksAddSearch from "/imports/ui/components/booksAddSearch";
 import UserProfile from "/imports/ui/containers/userProfile";
 
@@ -20,6 +21,7 @@ export const Routes = () =>(
 			<Route path="/books/:id" component={BookEdit}/>
 			<Route path="/addbooks" component={BooksAddSearch}/>
 			<Route path="/tradedbooks" component={BooksTraded}/>
+			<Route path="/trades" component={TradePage}/>
 			<Route path="/myProfile" component={UserProfile}/>
 		</Route>
 	</Router>
