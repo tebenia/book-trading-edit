@@ -1,7 +1,7 @@
 import {Meteor} from "meteor/meteor";
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
-import {cancel, ship, receive, accept, reject} from "./methods";
+import {cancel, ship, receive, accept, reject, archive} from "./methods";
 
 export const Trades = new Mongo.Collection("trades");
 
@@ -34,20 +34,19 @@ Trades.schema = new SimpleSchema({
 			return this.userId;
 		}
 	},
-	accepted: {
-		type: Boolean,
-		label: "Has the trade been accepted",
-		defaultValue: false
-	},
-	shipped: {
-		type: Boolean,
-		label: "Has the trade been shipped",
-		defaultValue: false
-	},
-	received: {
-		type: Boolean,
-		label: "Has the trade been received",
-		defaultValue: false
+	status: {
+		type: String,
+		label: "current Status of the trade",
+		allowedValues: [
+			  'pending',
+		      'cancelled',
+		      'accepted',
+		      'rejected',
+		      'shipped',
+		      'received',
+		      'archived'
+		],
+		defaultValue:"pending"
 	},
 	createdAt: {
 		type: Date,
@@ -70,9 +69,7 @@ Trades.helpers({
 	isTradeCreator(){
 		return this.userId === Meteor.userId();
 	},
-	book(){
-		return Books.findOne(this.bookId);
-	},
+	
 	isbookOwner(){
 		return this.bookOwnerUserId == Meteor.userId();
 	},
@@ -80,46 +77,37 @@ Trades.helpers({
 		cancel.call({tradeId: this._id});
 	},
 	canCancel(){
-		if(this.accepted || this.rejected || this.isbookOwner()){
-			return false;
-		}
-		return true;
+		return (this.status === "pending" && this.isTradeCreator());
 	},
 	accept(){
 		accept.call({tradeId: this._id});
 	},
 	canAccept(){
-		if(this.accepted || this.rejected || this.isbookOwner()){
-			return false;
-		}
-		return true;
+		return (this.status === "pending" && this.isbookOwner());
 	},
 	reject(){
 		reject.call({tradeId: this._id});
 	},
 	canReject(){
-		if(this.accepted || this.shipped || this.isbookOwner()){
-			return false;
-		}
-		return true;
+		return (this.status === "pending" && this.isbookOwner());
 	},
 	ship(){
 		ship.call({tradeId: this._id});
 	},
 	canShip(){
-		if(this.accepted || this.isbookOwner()){
-			return false;
-		}
-		return true;
+		return (this.status === "accepted" && this.isbookOwner());
 	},
 	receive(){
 		receive.call({tradeId: this._id});
 	},
 	canReceive(){
-		if(this.shipped || this.isTradeCreator()){
-			return false;
-		}
-		return true;
+		return (this.status === "shipped" && this.isbookOwner());
+	},
+	archive(){
+		archive.call({tradeId: this._id});
+	},
+	canArchive(){
+		return (['rejected', 'cancelled', 'received'].indexOf(this.status) >= 0 && this.isTradeCreator());
 	}
 });
 

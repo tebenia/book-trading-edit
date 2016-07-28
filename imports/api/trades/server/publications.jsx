@@ -12,6 +12,7 @@ Meteor.publishComposite('myTrades', {
 		const query= {};
 
 		query.userId = this.userId;
+		query.status = {$ne: "archived"};
 		return Trades.find(query);
 	},
 	children:[{

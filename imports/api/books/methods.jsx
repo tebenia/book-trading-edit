@@ -150,7 +150,7 @@ export const trade = new ValidatedMethod({
 			);
 		}
 
-		Trades.insert({bookId, bookOwnerUserId: book.userId});
-		Books.update(bookId, {$set: {traded: true}});
+		const tradeId = Trades.insert({bookId, bookOwnerUserId: book.userId});
+		Books.update(bookId, {$set: {traded: true, tradeId}});
 	}
 });

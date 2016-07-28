@@ -1,6 +1,6 @@
 import React from "react";
 import {Paper} from "material-ui";
-import {Card, CardActions, CardTitle, CardText} from "material-ui/Card";
+import {Card, CardHeader, CardActions, CardTitle, CardText} from "material-ui/Card";
 import {FlatButton} from "material-ui";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
@@ -35,6 +35,7 @@ class Trades extends React.Component {
 		this.handleShipClick = this.handleShipClick.bind(this);
 		this.handleCancelClick = this.handleCancelClick.bind(this);
 		this.handleReceiveClick = this.handleReceiveClick.bind(this);
+		this.handleArchiveClick = this.handleArchiveClick.bind(this);
 	}
 
 	handleAcceptClick(){
@@ -56,33 +57,39 @@ class Trades extends React.Component {
 		this.props.trade.receive();
 	}
 
+	handleArchiveClick(){
+		this.props.trade.archive();
+	}
+
 	renderActions(){
 		const trade = this.props.trade;
 		const actions = this.props.actions;
 		const actionButtons = [];
 
-		if (trade.isBookOwner()) {
-			if (actions.includes("accept") && trade.canAccept()) {
-				actionButtons.push(<FlatButton key="action_accept" label="Accept Trade" onClick={this.handleAcceptClick}/>);
-			}
-
-			if (actions.includes("reject") && trade.canReject()) {
-				actionButtons.push(<FlatButton key="action_reject" label="Reject Trade" onClick={this.handleRejectClick}/>);
-			}
-
-			if (actions.includes("ship") && trade.canShip()) {
-				actionButtons.push(<FlatButton key="action_ship" label="Ship Trade" onClick={this.handleShipClick}/>);
-			}
+		
+		if (trade.canAccept()) {
+			actionButtons.push(<FlatButton key="action_accept" label="Accept Trade" onClick={this.handleAcceptClick}/>);
 		}
 
-		if (trade.isTradeCreator()) {
-			if (actions.includes("cancel") && trade.canCancel()) {
-				actionButtons.push(<FlatButton key="action_cancel" label="Cancel Trade" onClick={this.handleCancelClick}/>);
-			}
+		if (trade.canReject()) {
+			actionButtons.push(<FlatButton key="action_reject" label="Reject Trade" onClick={this.handleRejectClick}/>);
+		}
 
-			if (actions.includes("receive") && trade.canReceive()) {
-				actionButtons.push(<FlatButton key="action_receive" label="Receive Trade" onClick={this.handleReceiveClick}/>);
-			}
+		if (trade.canShip()) {
+			actionButtons.push(<FlatButton key="action_ship" label="Ship Trade" onClick={this.handleShipClick}/>);
+		}
+	
+
+		if (trade.canCancel()) {
+			actionButtons.push(<FlatButton key="action_cancel" label="Cancel Trade" onClick={this.handleCancelClick}/>);
+		}
+
+		if (atrade.canReceive()) {
+			actionButtons.push(<FlatButton key="action_receive" label="Receive Trade" onClick={this.handleReceiveClick}/>);
+		}
+
+		if (atrade.canArchive()) {
+			actionButtons.push(<FlatButton key="action_archive" label="Archive Trade" onClick={this.handleArchiveClick}/>);
 		}
 
 		if (actionButtons.length > 0) {
@@ -100,6 +107,10 @@ class Trades extends React.Component {
 				<div>	
 					<Paper style={styles.paper} zDepth={4}>
 						<Card>
+							<CardHeader 
+								title={this.props.trade.status}
+								subtitle={"Whatever"}
+							/>
 							<CardTitle 
 								title={this.props.book.title}
 								subtitle={this.props.book.author}

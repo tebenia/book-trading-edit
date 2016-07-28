@@ -21,7 +21,7 @@ export const Routes = () =>(
 			<Route path="/books/:id" component={BookEdit}/>
 			<Route path="/addbooks" component={BooksAddSearch}/>
 			<Route path="/tradedbooks" component={BooksTraded}/>
-			<Route path="/trades" component={TradePage}/>
+			<Route path="/mytrades" component={TradePage}/>
 			<Route path="/myProfile" component={UserProfile}/>
 		</Route>
 	</Router>

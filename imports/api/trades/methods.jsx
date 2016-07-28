@@ -26,8 +26,8 @@ export const cancel = new ValidatedMethod({
 			);
 		}
 
-		Trades.remove(tradeId);
-		Books.update(trade.bookId, {$set: {traded: false}});
+		Trades.update(tradeId, {$set: {status: "cancelled"}});
+		Books.update(trade.bookId, {$set: {traded: false}, $unset: {tradeId:""}});
 	}
 });
 
@@ -53,7 +53,7 @@ export const accept = new ValidatedMethod({
 			);
 		}
 
-		Trades.update(tradeId, {$set: {accepted: true, rejected: false}});
+		Trades.update(tradeId, {$set: {status: "accepted"}});
 	}
 });
 
@@ -79,8 +79,8 @@ export const reject = new ValidatedMethod({
 			);
 		}
 
-		Trades.update(tradeId, {$set: {accepted: false, rejected: true}});
-		Books.update(trade.bookId, {$set: {traded: false}});
+		Trades.update(tradeId, {$set: {status: "rejected"}});
+		Books.update(trade.bookId, {$set: {traded: false}, $unset:{tradeId:""}});
 	}
 });
 
@@ -106,7 +106,7 @@ export const ship = new ValidatedMethod({
 			);
 		}
 
-		Trades.update(tradeId, {$set: {shipped: true}});
+		Trades.update(tradeId, {$set: {status: "shipped"}});
 	}
 });
 
@@ -132,6 +132,32 @@ export const receive = new ValidatedMethod({
 			);
 		}
 
-		Trades.update(tradeId, {$set: {received: true}});
+		Trades.update(tradeId, {$set: {status: "received"}});
+	}
+});
+
+export const archive = new ValidatedMethod({
+	name: "trades.archive",
+	validate: new SimpleSchema({
+		tradeId: {
+			type: String
+		}
+	}).validator(),
+	run({tradeId}){
+		const trade = Trades.findOne(tradeId);
+
+		if(!trade){
+			throw new Meteor.error("trades.archive.accessDenied",
+				"Unable to find trade"
+			);
+		}
+
+		if (!trade.canReceived()) {
+			throw new Meteor.error("trades.archive.accessDenied",
+				"Unable to archive trade"
+			);
+		}
+
+		Trades.update(tradeId, {$set: {status: "archived"}});
 	}
 });
